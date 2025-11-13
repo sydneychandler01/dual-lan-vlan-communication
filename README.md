@@ -1,4 +1,4 @@
-# Dual-Lan-Vlan-Communication Project
+# Dual-Lan-Vlan-Communication Project (Router-on-a-Stick)
 ## Overview
 This project simulates a small enterprise network that utilizes VLANs to segment departments and employs inter-VLAN routing to facilitate controlled communication between them.  
 It was built using Cisco Packet Tracer to demonstrate VLAN creation, trunking, and Layer 3 routing.
@@ -6,36 +6,76 @@ It was built using Cisco Packet Tracer to demonstrate VLAN creation, trunking, a
 ---
 
 ## Topology
-![Network Topology](./topology/vlan_topology.png)
+![Network Topology](<img width="595" height="694" alt="image" src="https://github.com/user-attachments/assets/f57e3979-3ab4-4a25-9eda-1fafbe6b682f" />)
 
 Devices:
-- 2 Layer 2 Switches (Switch1, Switch2)
-- 1 Router (Router0)
-- 4 PCs (2 in each VLAN)
+- 2 (Switch1, Switch2)
+- 1 Router (Router1)
+- 2 PCs (1 in each VLAN)
 
 ## Objectives
-1. Configure VLANs to separate traffic between two departments.  
+1. Configure VLANs to separate traffic between departments.  
 2. Enable inter-VLAN communication using router-on-a-stick.  
 3. Verify connectivity with ping and traceroute.  
 4. Document topology, IP addressing, and configurations.
 
 ## Network Design
-| VLAN | Department | Network | Default Gateway |
-|------|-------------|----------|----------------|
-| 10 | Admin | 192.168.10.0/24 | 192.168.10.1 |
-| 20 | Finance | 192.168.20.0/24 | 192.168.20.1 |
+| Device | VLAN | Department | Network | Default Gateway |
+|------|------|-------------|----------|----------------|
+| PC1 | 10 | Admin | 192.168.10.10/24 | 192.168.10.1 |
+| PC2 | 20 | Finance | 192.168.20.10/24 | 192.168.20.1 |
 
 ## Summary
 
 ### **Router Configuration**
 ```bash
-interface g0/0
- no shutdown
-!
-interface g0/0.10
- encapsulation dot1Q 10
- ip address 192.168.10.1 255.255.255.0
-!
-interface g0/0.20
- encapsulation dot1Q 20
- ip address 192.168.20.1 255.255.255.0
+Router#config t
+Router(config)#int g0/0/1.10
+Router(config-subif)#description Default Gateway for Admin
+Router(config-subif)#encapsulation dot1Q 10
+Router(config-subif)#ip add 192.168.10.1 255.255.255.0
+Router(config-subif)#exit
+Router(config)#int g0/0/1.20
+Router(config-subif)#description Default Gateway for Finance
+Router(config-subif)#encapsulation dot1Q 20
+Router(config-subif)#ip add 192.168.20.1 255.255.255.0
+Router(config-subif)#exit
+Router(config)#int g0/0/1.99
+Router(config-subif)#description Default Gateway for Management
+Router(config-subif)#encapsulation dot1Q 99
+Router(config-subif)#ip add 192.168.99.1 255.255.255.0
+Router(config-subif)#exit
+Router(config)#int g0/0/1
+Router(config-if)#description Trunk Link to S1
+Router(config-if)#no shut
+```
+### **Switch Configuration**
+```bash
+Switch(config)#vlan 10
+Switch(config-vlan)#name Admin
+Switch(config-vlan)#exit
+Switch(config)#vlan 20
+Switch(config-vlan)#name Finance
+Switch(config-vlan)#exit
+Switch(config)#vlan 99
+Switch(config-vlan)#name Management
+Switch(config-vlan)#exit
+Switch(config)#int vlan 99
+Switch(config-if)#ip add 192.168.99.2 255.255.255.0
+Switch(config-if)#no shut
+Switch(config-if)#exit
+Switch(config)#ip default-gateway 192.168.99.1
+Switch(config)#int fa0/6
+Switch(config-if)#switchport mode access
+Switch(config-if)#switchport access vlan 10
+Switch(config-if)#no shut
+Switch(config-if)#exit
+Switch(config)#int fa0/1
+Switch(config-if)#switchport mode trunk
+Switch(config-if)#no shut
+Switch(config-if)#exit
+Switch(config)#int fa0/5
+Switch(config-if)#switchport mode trunk
+Switch(config-if)#no shut
+Switch(config-if)#end
+```
