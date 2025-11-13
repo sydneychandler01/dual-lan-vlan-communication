@@ -81,3 +81,5 @@ Switch(config-if)#end
 ### Verify Inter-VLAN Routing by Pinging from PC1
 ![Verify](PingVerify.png)
 
+## Documentation
+All diagrams and verification screenshots can be found in ![Screenshots](Project_Screenshots.pdf)
