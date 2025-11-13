@@ -80,4 +80,5 @@ Switch(config-if)#no shut
 Switch(config-if)#end
 ```
 ### Verify Inter-VLAN Routing by Pinging from PC1
-![Verification](Ping Verify.png)
+![Verify](PingVerify.png)
+
