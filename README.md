@@ -6,7 +6,7 @@ It was built using Cisco Packet Tracer to demonstrate VLAN creation, trunking, a
 ---
 
 ## Topology
-![Network Topology](<img width="595" height="694" alt="image" src="https://github.com/user-attachments/assets/f57e3979-3ab4-4a25-9eda-1fafbe6b682f" />)
+![Network Topology](Topology.png)
 
 Devices:
 - 2 (Switch1, Switch2)
