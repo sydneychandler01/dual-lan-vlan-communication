@@ -14,10 +14,9 @@ Devices:
 - 2 PCs (1 in each VLAN)
 
 ## Objectives
-1. Configure VLANs to separate traffic between departments.  
-2. Enable inter-VLAN communication using router-on-a-stick.  
-3. Verify connectivity with ping and traceroute.  
-4. Document topology, IP addressing, and configurations.
+1. Build the Network and Configure Basic Device Settings
+2. Configure Switches with VLANs and Trunking
+3. Configure Trunk-Based Inter-VLAN Routing
 
 ## Network Design
 | Device | VLAN | Department | Network | Default Gateway |
