@@ -82,4 +82,4 @@ Switch(config-if)#end
 ![Verify](PingVerify.png)
 
 ## Documentation
-All diagrams and verification screenshots can be found in ![Screenshots](Project_Screenshots.pdf)
+All diagrams and verification screenshots can be found [in this pdf](Project_Screenshots.pdf)
